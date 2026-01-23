@@ -9,7 +9,8 @@ import {
   Linkedin,
   ExternalLink,
   Shield,
-  FileText
+  FileText,
+  Phone
 } from "lucide-react";
 
 // Dados da empresa
@@ -17,19 +18,20 @@ const COMPANY_DATA = {
   name: "DoctorAI",
   legalName: "Teledoc Journey Medical",
   corporateName: "TELEDOC CURSOS LTDA",
-  cnpj: "Em processo de registro", // Atualizar quando disponível
+  cnpj: "51.986.681/0001-40",
   email: "teledoc@teledocmedical.com",
-  phone: "+55 (54) 99999-9999", // Atualizar com telefone real
+  phone: "+55 53 99909-2711",
+  whatsapp: "5553999092711",
   address: {
-    street: "Rua João Tomazini, 818",
-    complement: "apt 02, Centro",
-    city: "Ilopolis",
+    street: "Rua General Neto, nº 1840",
+    complement: "Apto. 401, Bloco D, Centro",
+    city: "Pelotas",
     state: "RS",
-    zip: "95990-000",
+    zip: "96015-480",
     country: "Brasil"
   },
   social: {
-    instagram: "https://instagram.com/drjonasspezia",
+    instagram: "https://instagram.com/teledocjourney",
     linkedin: "https://linkedin.com/company/teledocmedical"
   },
   urls: {
@@ -58,7 +60,7 @@ const footerLinks = {
     { label: "Segurança e LGPD", href: "/seguranca" }
   ],
   support: [
-    { label: "Suporte", href: `mailto:${COMPANY_DATA.email}` },
+    { label: "Central de Suporte", href: "/suporte" },
     { label: "Integrações", href: "/integracoes" }
   ]
 };
@@ -99,10 +101,20 @@ export default function Footer() {
                 <Mail className="w-4 h-4 text-dourado" />
                 {COMPANY_DATA.email}
               </a>
+              <a
+                href={`https://wa.me/${COMPANY_DATA.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-cinza-400 hover:text-dourado transition-colors text-sm"
+              >
+                <Phone className="w-4 h-4 text-dourado" />
+                {COMPANY_DATA.phone}
+              </a>
               <div className="flex items-start gap-3 text-cinza-400 text-sm">
                 <MapPin className="w-4 h-4 text-dourado mt-0.5" />
                 <span>
-                  {COMPANY_DATA.address.city}, {COMPANY_DATA.address.state} - {COMPANY_DATA.address.country}
+                  {COMPANY_DATA.address.street}, {COMPANY_DATA.address.complement}<br />
+                  {COMPANY_DATA.address.city}/{COMPANY_DATA.address.state} - {COMPANY_DATA.address.country}
                 </span>
               </div>
             </div>
@@ -222,7 +234,7 @@ export default function Footer() {
                 &copy; {currentYear} {COMPANY_DATA.legalName}. Todos os direitos reservados.
               </p>
               <p className="mt-1">
-                {COMPANY_DATA.corporateName}
+                {COMPANY_DATA.corporateName} • CNPJ: {COMPANY_DATA.cnpj}
               </p>
             </div>
 

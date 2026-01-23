@@ -14,7 +14,7 @@ export default function JsonLdSchema() {
     ],
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+55-51-99999-9999",
+      telephone: "+55-53-99909-2711",
       contactType: "customer service",
       availableLanguage: ["Portuguese"]
     }
@@ -141,10 +141,10 @@ export default function JsonLdSchema() {
       },
       {
         "@type": "Question",
-        name: "Qual a diferenca entre os planos Profissional e Empresarial do DoctorAI?",
+        name: "Qual a diferença entre os planos Profissional e Empresarial do DoctorAI?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "O plano Profissional (R$ 97/mes) inclui Chat IA, Prontuarios SOAP, Transcricao, Upload de imagens e Web Search. O plano Empresarial (R$ 149/mes) adiciona Code Interpreter, Ferramentas avancadas e Canais de colaboracao para equipes."
+          text: "O plano Profissional (R$ 97/mês) inclui Chat IA, Prontuários SOAP, Transcrição, Upload de imagens e Web Search. O plano Empresarial (R$ 149/mês) adiciona Code Interpreter, Ferramentas avançadas e Canais de colaboração para equipes."
         }
       },
       {
@@ -173,10 +173,10 @@ export default function JsonLdSchema() {
       },
       {
         "@type": "Question",
-        name: "Quanto custa o DoctorAI por mes?",
+        name: "Quanto custa o DoctorAI por mês?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "O DoctorAI custa a partir de R$ 97/mes no plano Profissional ou R$ 149/mes no plano Empresarial. Nao ha taxa de instalacao ou custos ocultos."
+          text: "O DoctorAI custa a partir de R$ 97/mês no plano Profissional ou R$ 149/mês no plano Empresarial. Não há taxa de instalação ou custos ocultos."
         }
       }
     ]

@@ -19,7 +19,7 @@ export default function FinalCTA() {
   };
 
   const handleTryFree = () => {
-    trackCTAClick("final_cta", "Testar Gratis");
+    trackCTAClick("final_cta", "Testar Grátis");
   };
 
   const benefits = [
@@ -63,7 +63,7 @@ export default function FinalCTA() {
             <p className="text-cinza-400 text-sm mb-1">Essencial</p>
             <div className="flex items-baseline justify-center gap-1">
               <span className="text-3xl font-extrabold gradient-text">R$97</span>
-              <span className="text-cinza-400 text-sm">/mes</span>
+              <span className="text-cinza-400 text-sm">/mês</span>
             </div>
             <p className="text-cinza-500 text-xs mt-1">Chat IA, SOAP, Upload, Web Search</p>
           </div>
@@ -73,7 +73,7 @@ export default function FinalCTA() {
             <p className="text-cinza-400 text-sm mb-1">Completo</p>
             <div className="flex items-baseline justify-center gap-1">
               <span className="text-3xl font-extrabold text-white">R$149</span>
-              <span className="text-cinza-400 text-sm">/mes</span>
+              <span className="text-cinza-400 text-sm">/mês</span>
             </div>
             <p className="text-cinza-500 text-xs mt-1">+ Code Interpreter, Tools, Canais</p>
           </div>

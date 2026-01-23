@@ -205,9 +205,9 @@ export default function CalculadoraPage() {
                   </span>
                 </summary>
                 <p className="text-cinza-600 mt-4">
-                  Sim! O ROI (Retorno sobre Investimento) ja desconta o valor da
+                  Sim! O ROI (Retorno sobre Investimento) já desconta o valor da
                   assinatura mensal de R$ 97. Se o ROI mostra 500%, significa
-                  que para cada R$ 1 investido, voce recupera R$ 5 em valor de
+                  que para cada R$ 1 investido, você recupera R$ 5 em valor de
                   tempo.
                 </p>
               </details>
@@ -261,7 +261,7 @@ export default function CalculadoraPage() {
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3 shadow-glow hover:shadow-glow-lg transition-all"
             >
-              Comecar Agora - R$ 97/mes
+              Começar Agora - R$ 97/mês
             </a>
             <p className="text-cinza-500 text-sm mt-4">
               Cancele quando quiser. Sem fidelidade.

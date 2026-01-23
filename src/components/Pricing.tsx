@@ -33,13 +33,13 @@ const PLANS = {
   essencial: {
     name: "Essencial",
     price: 97,
-    description: "Para medicos que querem otimizar sua rotina",
+    description: "Para médicos que querem otimizar sua rotina",
     icon: Zap,
     popular: true,
     features: [
-      { icon: MessageSquare, text: "Chat com IA medica ilimitado" },
-      { icon: FileText, text: "Prontuarios SOAP automaticos" },
-      { icon: Mic, text: "Transcricao em tempo real" },
+      { icon: MessageSquare, text: "Chat com IA médica ilimitado" },
+      { icon: FileText, text: "Prontuários SOAP automáticos" },
+      { icon: Mic, text: "Transcrição em tempo real" },
       { icon: Image, text: "Upload de imagens e exames" },
       { icon: Search, text: "Pesquisa web integrada" },
       { icon: Headphones, text: "Suporte por email" }
@@ -48,30 +48,30 @@ const PLANS = {
   completo: {
     name: "Completo",
     price: 149,
-    description: "Todos os recursos para maxima produtividade",
+    description: "Todos os recursos para máxima produtividade",
     icon: Crown,
     popular: false,
     features: [
       { icon: Check, text: "Tudo do plano Essencial" },
       { icon: Key, text: "API Keys personalizadas" },
-      { icon: Code, text: "Code Interpreter avancado" },
+      { icon: Code, text: "Code Interpreter avançado" },
       { icon: Wrench, text: "Ferramentas personalizadas" },
-      { icon: Users, text: "Canais de colaboracao" },
-      { icon: Headphones, text: "Suporte prioritario" }
+      { icon: Users, text: "Canais de colaboração" },
+      { icon: Headphones, text: "Suporte prioritário" }
     ]
   },
   enterprise: {
     name: "Enterprise",
     price: null,
-    description: "Para faculdades, clinicas e planos de saude",
+    description: "Para faculdades, clínicas e planos de saúde",
     icon: Building2,
     popular: false,
     features: [
       { icon: Check, text: "Tudo do plano Completo" },
-      { icon: Users, text: "100+ usuarios" },
+      { icon: Users, text: "100+ usuários" },
       { icon: Shield, text: "SLA garantido 99.9%" },
       { icon: BookOpen, text: "Treinamento personalizado" },
-      { icon: Wrench, text: "Integracoes customizadas" },
+      { icon: Wrench, text: "Integrações customizadas" },
       { icon: Headphones, text: "Gerente de conta dedicado" }
     ]
   }
@@ -79,10 +79,10 @@ const PLANS = {
 
 const benefits = [
   "Economize 2 horas por dia",
-  "Documentacao mais completa",
-  "Menos erros em prontuarios",
+  "Documentação mais completa",
+  "Menos erros em prontuários",
   "Foco total no paciente",
-  "Atualizacoes automaticas",
+  "Atualizações automáticas",
   "Cancele quando quiser"
 ];
 
@@ -146,7 +146,7 @@ export default function Pricing() {
                   <div className="flex items-baseline gap-1">
                     <span className="text-sm text-cinza-500">R$</span>
                     <span className="text-4xl font-extrabold gradient-text">{PLANS.essencial.price}</span>
-                    <span className="text-cinza-500">/mes</span>
+                    <span className="text-cinza-500">/mês</span>
                   </div>
                   <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
                 </div>
@@ -197,7 +197,7 @@ export default function Pricing() {
                   <div className="flex items-baseline gap-1">
                     <span className="text-sm text-cinza-500">R$</span>
                     <span className="text-4xl font-extrabold text-preto">{PLANS.completo.price}</span>
-                    <span className="text-cinza-500">/mes</span>
+                    <span className="text-cinza-500">/mês</span>
                   </div>
                   <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
                 </div>
@@ -248,7 +248,7 @@ export default function Pricing() {
                   <div className="flex items-baseline gap-1">
                     <span className="text-2xl font-extrabold text-white">Sob consulta</span>
                   </div>
-                  <p className="text-xs text-cinza-400 mt-1">Precos personalizados por volume</p>
+                  <p className="text-xs text-cinza-400 mt-1">Preços personalizados por volume</p>
                 </div>
 
                 {/* Features */}
@@ -263,12 +263,12 @@ export default function Pricing() {
 
                 {/* CTA Button - Link to form */}
                 <a
-                  href="mailto:teledoc@teledocmedical.com?subject=DoctorAI Enterprise - Solicitar Orcamento&body=Ola! Gostaria de solicitar um orcamento para o plano Enterprise do DoctorAI.%0A%0ANome da instituicao:%0ATipo (faculdade/clinica/plano de saude):%0ANumero de usuarios estimado:%0AContato:"
+                  href="mailto:teledoc@teledocmedical.com?subject=DoctorAI Enterprise - Solicitar Orçamento&body=Olá! Gostaria de solicitar um orçamento para o plano Enterprise do DoctorAI.%0A%0ANome da instituição:%0ATipo (faculdade/clínica/plano de saúde):%0ANúmero de usuários estimado:%0AContato:"
                   onClick={() => handleSubscribe("enterprise")}
                   className="group bg-dourado hover:bg-dourado-claro text-preto w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-glow hover:shadow-glow-lg hover:-translate-y-1 transition-all duration-300"
                 >
                   <Mail className="w-4 h-4" />
-                  Solicitar Orcamento
+                  Solicitar Orçamento
                 </a>
               </div>
             </div>
@@ -311,7 +311,7 @@ export default function Pricing() {
                   <td className="px-4 py-3 text-center text-sm font-semibold text-cinza-700">Sob consulta</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Usuarios</td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Usuários</td>
                   <td className="px-4 py-3 text-center text-sm text-cinza-600">1</td>
                   <td className="px-4 py-3 text-center text-sm text-cinza-600">1</td>
                   <td className="px-4 py-3 text-center text-sm text-cinza-600">100+</td>
@@ -323,7 +323,7 @@ export default function Pricing() {
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Prontuarios SOAP</td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Prontuários SOAP</td>
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
@@ -353,7 +353,7 @@ export default function Pricing() {
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Ferramentas avancadas</td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Ferramentas avançadas</td>
                   <td className="px-4 py-3 text-center text-cinza-400">-</td>
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                   <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
@@ -378,7 +378,7 @@ export default function Pricing() {
         {/* Guarantee */}
         <div className="mt-12 text-center animate-fade-in-up">
           <p className="text-cinza-500 text-sm">
-            Nao ficou satisfeito? <span className="font-semibold text-cinza-700">Cancele a qualquer momento</span> sem burocracia.
+            Não ficou satisfeito? <span className="font-semibold text-cinza-700">Cancele a qualquer momento</span> sem burocracia.
           </p>
         </div>
       </div>

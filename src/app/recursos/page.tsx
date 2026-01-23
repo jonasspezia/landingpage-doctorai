@@ -357,7 +357,7 @@ export default function RecursosPage() {
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3"
             >
-              Comecar Agora - R$ 97/mes
+              Começar Agora - R$ 97/mês
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>

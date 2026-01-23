@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CreditCard } from "lucide-react";
 
-// Link de pagamento do Stripe - Plano Profissional R$97/mes
+// Link de pagamento do Stripe - Plano Profissional R$97/mês
 const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w";
 
 interface HeaderProps {
