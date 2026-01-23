@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { ArrowRight, Sparkles, CreditCard } from "lucide-react";
 
-// Link de pagamento do Stripe - DoctorAI Ilimitado R$147/mes
-const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/6oU4gA1cw3RL4OJ4aG2Ji0u";
+// Link de pagamento do Stripe - Plano Profissional R$97/mes
+const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w";
 
 export default function StickyCTA() {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,7 +24,7 @@ export default function StickyCTA() {
   }, []);
 
   const handleSubscribe = () => {
-    trackEvent("cta_click", { cta_location: "sticky_bar", cta_text: "Assinar R$147/mês" });
+    trackEvent("cta_click", { cta_location: "sticky_bar", cta_text: "Assinar R$97/mes" });
   };
 
   const handleTryFree = () => {
@@ -49,8 +49,8 @@ export default function StickyCTA() {
         <div className="hidden md:flex items-center gap-3">
           <Sparkles className="w-4 h-4 text-dourado" />
           <p className="text-white text-sm font-medium">
-            <span className="text-dourado font-bold">DoctorAI</span> - IA médica ilimitada por{" "}
-            <span className="text-dourado font-bold">R$147/mês</span>
+            <span className="text-dourado font-bold">DoctorAI</span> - IA medica a partir de{" "}
+            <span className="text-dourado font-bold">R$97/mes</span>
           </p>
         </div>
 

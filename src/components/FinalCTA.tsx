@@ -1,25 +1,25 @@
 "use client";
 
 import { trackCTAClick } from "@/lib/analytics";
-import { ArrowRight, Sparkles, Check, Clock, Shield, Zap, CreditCard, Tag } from "lucide-react";
+import { ArrowRight, Sparkles, Check, Clock, Shield, Zap, CreditCard, Crown } from "lucide-react";
 
-// Links de pagamento do Stripe - DoctorAI Ilimitado
+// Links de pagamento do Stripe - Planos para médicos individuais
 const STRIPE_LINKS = {
-  monthly: "https://buy.stripe.com/6oU4gA1cw3RL4OJ4aG2Ji0u",
-  yearly: "https://buy.stripe.com/eVqeVedZi1JDchbePk2Ji0v"
+  essencial: "https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w",
+  completo: "https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
 };
 
 export default function FinalCTA() {
-  const handleSubscribeYearly = () => {
-    trackCTAClick("final_cta", "Assinar Anual R$1.470");
+  const handleSubscribeEssencial = () => {
+    trackCTAClick("final_cta", "Assinar Essencial R$97");
   };
 
-  const handleSubscribeMonthly = () => {
-    trackCTAClick("final_cta", "Assinar Mensal R$147");
+  const handleSubscribeCompleto = () => {
+    trackCTAClick("final_cta", "Assinar Completo R$149");
   };
 
   const handleTryFree = () => {
-    trackCTAClick("final_cta", "Testar Grátis");
+    trackCTAClick("final_cta", "Testar Gratis");
   };
 
   const benefits = [
@@ -52,30 +52,30 @@ export default function FinalCTA() {
 
         {/* Price Cards */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-fade-in-up delay-200">
-          {/* Yearly - Recommended */}
+          {/* Essencial - Popular */}
           <div className="relative glass-dark rounded-2xl p-6 border border-dourado/30 w-full sm:w-auto">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <span className="bg-verde text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                <Tag className="w-3 h-3" />
-                ECONOMIZE R$294
+                <Zap className="w-3 h-3" />
+                MAIS POPULAR
               </span>
             </div>
-            <p className="text-cinza-400 text-sm mb-1">Plano Anual</p>
+            <p className="text-cinza-400 text-sm mb-1">Essencial</p>
             <div className="flex items-baseline justify-center gap-1">
-              <span className="text-3xl font-extrabold gradient-text">R$1.470</span>
-              <span className="text-cinza-400 text-sm">/ano</span>
+              <span className="text-3xl font-extrabold gradient-text">R$97</span>
+              <span className="text-cinza-400 text-sm">/mes</span>
             </div>
-            <p className="text-cinza-500 text-xs mt-1">R$122,50/mês - 2 meses grátis</p>
+            <p className="text-cinza-500 text-xs mt-1">Chat IA, SOAP, Upload, Web Search</p>
           </div>
 
-          {/* Monthly */}
+          {/* Completo */}
           <div className="glass-dark rounded-2xl p-6 border border-cinza-700 w-full sm:w-auto">
-            <p className="text-cinza-400 text-sm mb-1">Plano Mensal</p>
+            <p className="text-cinza-400 text-sm mb-1">Completo</p>
             <div className="flex items-baseline justify-center gap-1">
-              <span className="text-3xl font-extrabold text-white">R$147</span>
-              <span className="text-cinza-400 text-sm">/mês</span>
+              <span className="text-3xl font-extrabold text-white">R$149</span>
+              <span className="text-cinza-400 text-sm">/mes</span>
             </div>
-            <p className="text-cinza-500 text-xs mt-1">Cobrado mensalmente</p>
+            <p className="text-cinza-500 text-xs mt-1">+ Code Interpreter, Tools, Canais</p>
           </div>
         </div>
 
@@ -93,39 +93,39 @@ export default function FinalCTA() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col items-center gap-4 animate-fade-in-up delay-300">
-          {/* Primary CTA - Subscribe Yearly */}
-          <a
-            href={STRIPE_LINKS.yearly}
-            onClick={handleSubscribeYearly}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 btn-gradient text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-glow-lg hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
-          >
-            <CreditCard className="w-5 h-5" />
-            Assinar Anual - Melhor Valor
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
-
-          {/* Secondary CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          {/* Primary CTAs - Both Plans */}
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <a
-              href={STRIPE_LINKS.monthly}
-              onClick={handleSubscribeMonthly}
+              href={STRIPE_LINKS.essencial}
+              onClick={handleSubscribeEssencial}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cinza-300 hover:text-white text-sm font-medium transition-colors underline underline-offset-4"
+              className="group inline-flex items-center gap-3 btn-gradient text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-glow-lg hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
             >
-              Prefiro pagar mensal
+              <CreditCard className="w-5 h-5" />
+              Assinar Essencial
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
-            <span className="text-cinza-600">|</span>
             <a
-              href="https://doctorai.teledocmedical.ai"
-              onClick={handleTryFree}
-              className="text-dourado hover:text-dourado-claro text-sm font-medium transition-colors"
+              href={STRIPE_LINKS.completo}
+              onClick={handleSubscribeCompleto}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-3 bg-cinza-800 hover:bg-cinza-700 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-soft hover:shadow-elevated hover:-translate-y-1 transition-all duration-300"
             >
-              Testar grátis primeiro
+              <Crown className="w-5 h-5" />
+              Assinar Completo
             </a>
           </div>
+
+          {/* Try Free */}
+          <a
+            href="https://doctorai.teledocmedical.ai"
+            onClick={handleTryFree}
+            className="text-dourado hover:text-dourado-claro text-sm font-medium transition-colors"
+          >
+            Testar gratis primeiro
+          </a>
         </div>
 
         {/* Trust indicators */}

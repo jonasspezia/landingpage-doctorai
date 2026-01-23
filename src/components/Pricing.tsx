@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { trackCTAClick } from "@/lib/analytics";
 import {
   Check,
@@ -12,95 +11,97 @@ import {
   Headphones,
   Zap,
   Shield,
-  Infinity,
-  Tag
+  Image,
+  Search,
+  Key,
+  Code,
+  Wrench,
+  Users,
+  Crown,
+  Building2,
+  Mail
 } from "lucide-react";
 
-// Links de pagamento do Stripe - DoctorAI Ilimitado
+// Links de pagamento do Stripe
 const STRIPE_LINKS = {
-  monthly: "https://buy.stripe.com/6oU4gA1cw3RL4OJ4aG2Ji0u",
-  yearly: "https://buy.stripe.com/eVqeVedZi1JDchbePk2Ji0v"
+  essencial: "https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w",
+  completo: "https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
 };
 
-// Precos
-const PRICES = {
-  monthly: {
-    value: 147,
-    period: "mes",
-    yearly_total: 1764
+// Planos
+const PLANS = {
+  essencial: {
+    name: "Essencial",
+    price: 97,
+    description: "Para medicos que querem otimizar sua rotina",
+    icon: Zap,
+    popular: true,
+    features: [
+      { icon: MessageSquare, text: "Chat com IA medica ilimitado" },
+      { icon: FileText, text: "Prontuarios SOAP automaticos" },
+      { icon: Mic, text: "Transcricao em tempo real" },
+      { icon: Image, text: "Upload de imagens e exames" },
+      { icon: Search, text: "Pesquisa web integrada" },
+      { icon: Headphones, text: "Suporte por email" }
+    ]
   },
-  yearly: {
-    value: 1470,
-    monthly_equivalent: 122.5,
-    period: "ano",
-    savings: 294,
-    months_free: 2
+  completo: {
+    name: "Completo",
+    price: 149,
+    description: "Todos os recursos para maxima produtividade",
+    icon: Crown,
+    popular: false,
+    features: [
+      { icon: Check, text: "Tudo do plano Essencial" },
+      { icon: Key, text: "API Keys personalizadas" },
+      { icon: Code, text: "Code Interpreter avancado" },
+      { icon: Wrench, text: "Ferramentas personalizadas" },
+      { icon: Users, text: "Canais de colaboracao" },
+      { icon: Headphones, text: "Suporte prioritario" }
+    ]
+  },
+  enterprise: {
+    name: "Enterprise",
+    price: null,
+    description: "Para faculdades, clinicas e planos de saude",
+    icon: Building2,
+    popular: false,
+    features: [
+      { icon: Check, text: "Tudo do plano Completo" },
+      { icon: Users, text: "100+ usuarios" },
+      { icon: Shield, text: "SLA garantido 99.9%" },
+      { icon: BookOpen, text: "Treinamento personalizado" },
+      { icon: Wrench, text: "Integracoes customizadas" },
+      { icon: Headphones, text: "Gerente de conta dedicado" }
+    ]
   }
 };
-
-const features = [
-  {
-    icon: MessageSquare,
-    title: "Chat com IA Médica",
-    description: "Converse e tire dúvidas clínicas 24/7"
-  },
-  {
-    icon: FileText,
-    title: "Prontuários SOAP",
-    description: "Geração automática em segundos"
-  },
-  {
-    icon: Mic,
-    title: "Transcrição em Tempo Real",
-    description: "Áudio de consultas convertido em texto"
-  },
-  {
-    icon: BookOpen,
-    title: "Base de Conhecimento",
-    description: "Acesso à literatura médica atualizada"
-  },
-  {
-    icon: Headphones,
-    title: "Suporte Prioritário",
-    description: "Atendimento dedicado por WhatsApp"
-  },
-  {
-    icon: Infinity,
-    title: "Uso Ilimitado",
-    description: "Sem restrições de consultas ou mensagens"
-  }
-];
 
 const benefits = [
   "Economize 2 horas por dia",
-  "Documentação mais completa",
-  "Menos erros em prontuários",
+  "Documentacao mais completa",
+  "Menos erros em prontuarios",
   "Foco total no paciente",
-  "Atualizações automáticas",
+  "Atualizacoes automaticas",
   "Cancele quando quiser"
 ];
 
 export default function Pricing() {
-  const [isYearly, setIsYearly] = useState(true);
-
-  const handleSubscribe = () => {
-    const plan = isYearly ? "anual" : "mensal";
+  const handleSubscribe = (plan: "essencial" | "completo" | "enterprise") => {
     trackCTAClick("pricing", `Assinar ${plan}`);
   };
-
-  const currentLink = isYearly ? STRIPE_LINKS.yearly : STRIPE_LINKS.monthly;
 
   return (
     <section id="pricing" className="relative py-24 overflow-hidden">
       {/* Background - Single Layer */}
       <div className="absolute inset-0 bg-gradient-to-b from-cinza-50 via-white to-white" />
 
-      <div className="relative max-w-6xl mx-auto px-5">
+      <div className="relative max-w-7xl mx-auto px-5">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 glass px-5 py-2.5 rounded-full mb-6 shadow-soft animate-fade-in-up">
             <Sparkles className="w-4 h-4 text-dourado" />
-            <span className="text-sm font-semibold text-cinza-700">Plano Único e Simples</span>
+            <span className="text-sm font-semibold text-cinza-700">Escolha seu plano</span>
           </div>
 
           <h2 className="text-h2 text-preto mb-4 animate-fade-in-up delay-100">
@@ -108,149 +109,167 @@ export default function Pricing() {
             <span className="gradient-text">produtividade</span>
           </h2>
 
-          <p className="text-lg text-cinza-500 max-w-2xl mx-auto mb-8 animate-fade-in-up delay-200">
-            Um único plano com tudo incluso. Sem surpresas, sem taxas escondidas.
+          <p className="text-lg text-cinza-500 max-w-2xl mx-auto animate-fade-in-up delay-200">
+            Planos pensados para diferentes necessidades. Sem surpresas, sem taxas escondidas.
           </p>
-
-          {/* Toggle Mensal/Anual */}
-          <div className="inline-flex items-center gap-4 p-1.5 bg-cinza-100 rounded-2xl animate-fade-in-up delay-200">
-            <button
-              onClick={() => setIsYearly(false)}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                !isYearly
-                  ? "bg-white text-preto shadow-soft"
-                  : "text-cinza-500 hover:text-cinza-700"
-              }`}
-            >
-              Mensal
-            </button>
-            <button
-              onClick={() => setIsYearly(true)}
-              className={`px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-2 ${
-                isYearly
-                  ? "bg-white text-preto shadow-soft"
-                  : "text-cinza-500 hover:text-cinza-700"
-              }`}
-            >
-              Anual
-              <span className="bg-verde/20 text-verde text-xs font-bold px-2 py-0.5 rounded-full">
-                -2 MESES
-              </span>
-            </button>
-          </div>
         </div>
 
-        {/* Pricing Card */}
-        <div className="max-w-4xl mx-auto pt-6">
-          {/* Popular Badge - Outside card for visibility */}
-          <div className="flex justify-center mb-[-22px] relative z-10 animate-fade-in-up delay-300">
-            <div className="btn-gradient px-6 py-2 rounded-full text-white text-sm font-bold shadow-glow flex items-center gap-2">
-              <Zap className="w-4 h-4" />
-              {isYearly ? "Melhor Valor" : "Mais Popular"}
+        {/* Pricing Cards - 3 columns */}
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {/* Essencial Plan */}
+          <div className="relative animate-fade-in-up delay-200">
+            {/* Popular Badge */}
+            <div className="flex justify-center mb-[-22px] relative z-10">
+              <div className="btn-gradient px-6 py-2 rounded-full text-white text-sm font-bold shadow-glow flex items-center gap-2">
+                <Zap className="w-4 h-4" />
+                Mais Popular
+              </div>
             </div>
-          </div>
 
-          <div className="relative bg-white rounded-3xl shadow-elevated overflow-hidden card-hover animate-fade-in-up delay-300">
-            {/* Gradient Border Top */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dourado via-dourado-claro to-dourado" />
+            <div className="relative bg-white rounded-3xl shadow-elevated overflow-hidden card-hover h-full">
+              {/* Gradient Border Top */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dourado via-dourado-claro to-dourado" />
 
-            <div className="grid md:grid-cols-2 gap-0">
-              {/* Left Side - Price */}
-              <div className="p-8 md:p-12 flex flex-col justify-center border-b md:border-b-0 md:border-r border-cinza-100">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-preto mb-2">DoctorAI Ilimitado</h3>
-                  <p className="text-cinza-500">Acesso completo a todas as funcionalidades</p>
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dourado/20 to-dourado/10 flex items-center justify-center">
+                    <PLANS.essencial.icon className="w-5 h-5 text-dourado" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-preto">{PLANS.essencial.name}</h3>
+                    <p className="text-xs text-cinza-500">{PLANS.essencial.description}</p>
+                  </div>
                 </div>
 
                 {/* Price */}
-                <div className="mb-6">
-                  {isYearly ? (
-                    <>
-                      {/* Yearly Price */}
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm text-cinza-500">R$</span>
-                        <span className="text-6xl font-extrabold gradient-text">1.470</span>
-                        <span className="text-cinza-500">/ano</span>
-                      </div>
-                      <p className="text-sm text-cinza-400 mt-2">
-                        Equivale a <span className="font-semibold text-cinza-600">R$122,50/mes</span>
-                      </p>
+                <div className="mb-5">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm text-cinza-500">R$</span>
+                    <span className="text-4xl font-extrabold gradient-text">{PLANS.essencial.price}</span>
+                    <span className="text-cinza-500">/mes</span>
+                  </div>
+                  <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
+                </div>
 
-                      {/* Savings Badge */}
-                      <div className="mt-4 inline-flex items-center gap-2 bg-verde/10 text-verde px-4 py-2 rounded-xl">
-                        <Tag className="w-4 h-4" />
-                        <span className="font-bold text-sm">Economia de R$294</span>
-                        <span className="text-xs opacity-80">(2 meses gratis)</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* Monthly Price */}
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm text-cinza-500">R$</span>
-                        <span className="text-6xl font-extrabold gradient-text">147</span>
-                        <span className="text-cinza-500">/mes</span>
-                      </div>
-                      <p className="text-sm text-cinza-400 mt-2">Cobrado mensalmente</p>
-
-                      {/* Upsell to yearly */}
-                      <button
-                        onClick={() => setIsYearly(true)}
-                        className="mt-4 inline-flex items-center gap-2 bg-dourado/10 text-dourado-escuro px-4 py-2 rounded-xl hover:bg-dourado/20 transition-colors"
-                      >
-                        <Tag className="w-4 h-4" />
-                        <span className="font-semibold text-sm">Economize R$294 no plano anual</span>
-                      </button>
-                    </>
-                  )}
+                {/* Features */}
+                <div className="space-y-2 mb-6">
+                  {PLANS.essencial.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <feature.icon className="w-4 h-4 text-dourado flex-shrink-0" />
+                      <span className="text-sm text-cinza-700">{feature.text}</span>
+                    </div>
+                  ))}
                 </div>
 
                 {/* CTA Button */}
                 <a
-                  href={currentLink}
-                  onClick={handleSubscribe}
+                  href={STRIPE_LINKS.essencial}
+                  onClick={() => handleSubscribe("essencial")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group btn-gradient text-white px-8 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-glow-lg hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
+                  className="group btn-gradient text-white w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-glow-lg hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
                 >
-                  <Shield className="w-5 h-5" />
-                  {isYearly ? "Assinar Anual" : "Assinar Mensal"}
+                  <Shield className="w-4 h-4" />
+                  Assinar Essencial
                 </a>
+              </div>
+            </div>
+          </div>
 
-                {/* Trust */}
-                <div className="flex items-center justify-center gap-4 mt-6 text-sm text-cinza-400">
-                  <span className="flex items-center gap-1">
-                    <Check className="w-4 h-4 text-verde" />
-                    Pagamento seguro
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Check className="w-4 h-4 text-verde" />
-                    SSL
-                  </span>
+          {/* Completo Plan */}
+          <div className="relative animate-fade-in-up delay-300">
+            <div className="h-[22px]" /> {/* Spacer to align with Essencial card */}
+
+            <div className="relative bg-white rounded-3xl shadow-soft overflow-hidden card-hover h-full border-2 border-cinza-200">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cinza-200 to-cinza-100 flex items-center justify-center">
+                    <PLANS.completo.icon className="w-5 h-5 text-cinza-700" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-preto">{PLANS.completo.name}</h3>
+                    <p className="text-xs text-cinza-500">{PLANS.completo.description}</p>
+                  </div>
                 </div>
 
-                <p className="text-xs text-cinza-400 mt-4 text-center">
-                  Cancele quando quiser. Sem multa, sem burocracia.
-                </p>
-              </div>
+                {/* Price */}
+                <div className="mb-5">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm text-cinza-500">R$</span>
+                    <span className="text-4xl font-extrabold text-preto">{PLANS.completo.price}</span>
+                    <span className="text-cinza-500">/mes</span>
+                  </div>
+                  <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
+                </div>
 
-              {/* Right Side - Features */}
-              <div className="p-8 md:p-12 bg-cinza-50/50">
-                <h4 className="text-lg font-bold text-preto mb-6">Tudo incluso:</h4>
-
-                <div className="space-y-4">
-                  {features.map((feature, index) => (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dourado/20 to-dourado/10 flex items-center justify-center flex-shrink-0">
-                        <feature.icon className="w-5 h-5 text-dourado" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-cinza-700">{feature.title}</p>
-                        <p className="text-sm text-cinza-500">{feature.description}</p>
-                      </div>
+                {/* Features */}
+                <div className="space-y-2 mb-6">
+                  {PLANS.completo.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <feature.icon className="w-4 h-4 text-cinza-600 flex-shrink-0" />
+                      <span className="text-sm text-cinza-700">{feature.text}</span>
                     </div>
                   ))}
                 </div>
+
+                {/* CTA Button */}
+                <a
+                  href={STRIPE_LINKS.completo}
+                  onClick={() => handleSubscribe("completo")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-cinza-900 hover:bg-preto text-white w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-soft hover:shadow-elevated hover:-translate-y-1 transition-all duration-300"
+                >
+                  <Crown className="w-4 h-4" />
+                  Assinar Completo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Enterprise Plan */}
+          <div className="relative animate-fade-in-up delay-400">
+            <div className="h-[22px]" /> {/* Spacer to align */}
+
+            <div className="relative bg-gradient-to-br from-cinza-900 to-cinza-800 rounded-3xl shadow-elevated overflow-hidden card-hover h-full">
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                    <PLANS.enterprise.icon className="w-5 h-5 text-dourado" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">{PLANS.enterprise.name}</h3>
+                    <p className="text-xs text-cinza-400">{PLANS.enterprise.description}</p>
+                  </div>
+                </div>
+
+                {/* Price */}
+                <div className="mb-5">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-extrabold text-white">Sob consulta</span>
+                  </div>
+                  <p className="text-xs text-cinza-400 mt-1">Precos personalizados por volume</p>
+                </div>
+
+                {/* Features */}
+                <div className="space-y-2 mb-6">
+                  {PLANS.enterprise.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <feature.icon className="w-4 h-4 text-dourado flex-shrink-0" />
+                      <span className="text-sm text-cinza-300">{feature.text}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button - Link to form */}
+                <a
+                  href="mailto:teledoc@teledocmedical.com?subject=DoctorAI Enterprise - Solicitar Orcamento&body=Ola! Gostaria de solicitar um orcamento para o plano Enterprise do DoctorAI.%0A%0ANome da instituicao:%0ATipo (faculdade/clinica/plano de saude):%0ANumero de usuarios estimado:%0AContato:"
+                  onClick={() => handleSubscribe("enterprise")}
+                  className="group bg-dourado hover:bg-dourado-claro text-preto w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-glow hover:shadow-glow-lg hover:-translate-y-1 transition-all duration-300"
+                >
+                  <Mail className="w-4 h-4" />
+                  Solicitar Orcamento
+                </a>
               </div>
             </div>
           </div>
@@ -267,42 +286,89 @@ export default function Pricing() {
         </div>
 
         {/* Comparison Table */}
-        <div className="mt-16 max-w-2xl mx-auto animate-fade-in-up">
+        <div className="mt-16 max-w-4xl mx-auto animate-fade-in-up">
           <h4 className="text-center text-lg font-bold text-preto mb-6">Comparativo de Planos</h4>
-          <div className="bg-white rounded-2xl shadow-soft overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-soft overflow-hidden overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="bg-cinza-50">
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-cinza-700"></th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-cinza-700">Mensal</th>
-                  <th className="px-6 py-4 text-center text-sm font-semibold text-dourado">
-                    Anual
-                    <span className="ml-2 bg-verde/20 text-verde text-xs px-2 py-0.5 rounded-full">
-                      RECOMENDADO
+                  <th className="px-4 py-4 text-left text-sm font-semibold text-cinza-700">Recurso</th>
+                  <th className="px-4 py-4 text-center text-sm font-semibold text-dourado">
+                    Essencial
+                    <span className="ml-1 bg-verde/20 text-verde text-xs px-2 py-0.5 rounded-full">
+                      POPULAR
                     </span>
                   </th>
+                  <th className="px-4 py-4 text-center text-sm font-semibold text-cinza-700">Completo</th>
+                  <th className="px-4 py-4 text-center text-sm font-semibold text-cinza-700">Enterprise</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-cinza-100">
                 <tr>
-                  <td className="px-6 py-4 text-sm text-cinza-600">Valor mensal</td>
-                  <td className="px-6 py-4 text-center text-sm font-semibold text-cinza-700">R$147</td>
-                  <td className="px-6 py-4 text-center text-sm font-bold text-verde">R$122,50</td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Valor mensal</td>
+                  <td className="px-4 py-3 text-center text-sm font-bold text-dourado">R$97</td>
+                  <td className="px-4 py-3 text-center text-sm font-semibold text-cinza-700">R$149</td>
+                  <td className="px-4 py-3 text-center text-sm font-semibold text-cinza-700">Sob consulta</td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-cinza-600">Total anual</td>
-                  <td className="px-6 py-4 text-center text-sm text-cinza-500">R$1.764</td>
-                  <td className="px-6 py-4 text-center text-sm font-semibold text-cinza-700">R$1.470</td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Usuarios</td>
+                  <td className="px-4 py-3 text-center text-sm text-cinza-600">1</td>
+                  <td className="px-4 py-3 text-center text-sm text-cinza-600">1</td>
+                  <td className="px-4 py-3 text-center text-sm text-cinza-600">100+</td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-cinza-600">Economia</td>
-                  <td className="px-6 py-4 text-center text-sm text-cinza-400">-</td>
-                  <td className="px-6 py-4 text-center text-sm font-bold text-verde">R$294 (2 meses)</td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Chat IA ilimitado</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                 </tr>
                 <tr>
-                  <td className="px-6 py-4 text-sm text-cinza-600">Todas as funcionalidades</td>
-                  <td className="px-6 py-4 text-center"><Check className="w-5 h-5 text-verde mx-auto" /></td>
-                  <td className="px-6 py-4 text-center"><Check className="w-5 h-5 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Prontuarios SOAP</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Upload de imagens</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Web Search</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">API Keys</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Code Interpreter</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Ferramentas avancadas</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">SLA garantido</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 text-sm text-cinza-600">Gerente de conta</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
+                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
                 </tr>
               </tbody>
             </table>
@@ -312,7 +378,7 @@ export default function Pricing() {
         {/* Guarantee */}
         <div className="mt-12 text-center animate-fade-in-up">
           <p className="text-cinza-500 text-sm">
-            Não ficou satisfeito? <span className="font-semibold text-cinza-700">Cancele a qualquer momento</span> sem burocracia.
+            Nao ficou satisfeito? <span className="font-semibold text-cinza-700">Cancele a qualquer momento</span> sem burocracia.
           </p>
         </div>
       </div>

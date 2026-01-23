@@ -281,16 +281,16 @@ export default function ROICalculator({ variant = "full", showCTA = true }: ROIC
         {showCTA && (
           <div className="text-center">
             <a
-              href="https://buy.stripe.com/6oU4gA1cw3RL4OJ4aG2Ji0u"
+              href="https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3 shadow-glow hover:shadow-glow-lg transition-all"
             >
-              Começar a Economizar
+              Comecar a Economizar
               <ChevronRight className="w-5 h-5" />
             </a>
             <p className="text-cinza-500 text-sm mt-3">
-              Investimento: R$ 147/mês | Retorno: {formatCurrency(results.moneySavedPerMonth)}/mês
+              Investimento: R$ 97/mes | Retorno: {formatCurrency(results.moneySavedPerMonth)}/mes
             </p>
           </div>
         )}

@@ -29,7 +29,7 @@ export default function JsonLdSchema() {
     description: "IA médica para prontuários automáticos. Transcreva consultas e gere SOAP em segundos.",
     offers: {
       "@type": "Offer",
-      price: "147.00",
+      price: "97.00",
       priceCurrency: "BRL",
       priceValidUntil: "2026-12-31",
       availability: "https://schema.org/InStock"
@@ -141,10 +141,10 @@ export default function JsonLdSchema() {
       },
       {
         "@type": "Question",
-        name: "Qual a diferença entre o plano mensal e anual do DoctorAI?",
+        name: "Qual a diferenca entre os planos Profissional e Empresarial do DoctorAI?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Ambos oferecem acesso completo a todas as funcionalidades. O plano anual tem desconto de 17% (equivalente a R$ 122,50/mês vs R$ 147/mês no mensal)."
+          text: "O plano Profissional (R$ 97/mes) inclui Chat IA, Prontuarios SOAP, Transcricao, Upload de imagens e Web Search. O plano Empresarial (R$ 149/mes) adiciona Code Interpreter, Ferramentas avancadas e Canais de colaboracao para equipes."
         }
       },
       {
@@ -173,10 +173,10 @@ export default function JsonLdSchema() {
       },
       {
         "@type": "Question",
-        name: "Quanto custa o DoctorAI por mês?",
+        name: "Quanto custa o DoctorAI por mes?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "O DoctorAI custa R$ 147/mês no plano mensal ou R$ 122,50/mês no plano anual (R$ 1.470/ano). Não há taxa de instalação ou custos ocultos."
+          text: "O DoctorAI custa a partir de R$ 97/mes no plano Profissional ou R$ 149/mes no plano Empresarial. Nao ha taxa de instalacao ou custos ocultos."
         }
       }
     ]

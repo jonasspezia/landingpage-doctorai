@@ -352,12 +352,12 @@ export default function RecursosPage() {
               Experimente o DoctorAI e veja a transformação na prática.
             </p>
             <a
-              href="https://buy.stripe.com/6oU4gA1cw3RL4OJ4aG2Ji0u"
+              href="https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3"
             >
-              Começar Agora - R$ 147/mês
+              Comecar Agora - R$ 97/mes
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>

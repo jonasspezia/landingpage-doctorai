@@ -15,11 +15,11 @@ export const CALCULATOR_CONFIG = {
   // Semanas no mês (média)
   weeksPerMonth: 4.33,
 
-  // Preço mensal do DoctorAI
-  monthlyPrice: 147,
+  // Preco mensal do DoctorAI (Plano Profissional)
+  monthlyPrice: 97,
 
-  // Preço anual do DoctorAI
-  annualPrice: 1470,
+  // Preco Empresarial do DoctorAI
+  enterprisePrice: 149,
 };
 
 export interface ROIResults {
