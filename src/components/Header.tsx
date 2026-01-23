@@ -39,14 +39,34 @@ export default function Header({ variant = "dark" }: HeaderProps) {
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-6">
             <Link
-              href="/#features"
+              href="/especialidades"
               className={`text-sm font-medium transition-colors ${
                 isDark
                   ? "text-cinza-400 hover:text-white"
                   : "text-cinza-600 hover:text-preto"
               }`}
             >
-              Funcionalidades
+              Especialidades
+            </Link>
+            <Link
+              href="/blog"
+              className={`text-sm font-medium transition-colors ${
+                isDark
+                  ? "text-cinza-400 hover:text-white"
+                  : "text-cinza-600 hover:text-preto"
+              }`}
+            >
+              Blog
+            </Link>
+            <Link
+              href="/calculadora"
+              className={`text-sm font-medium transition-colors ${
+                isDark
+                  ? "text-cinza-400 hover:text-white"
+                  : "text-cinza-600 hover:text-preto"
+              }`}
+            >
+              Calculadora
             </Link>
             <Link
               href="/#pricing"
@@ -56,17 +76,7 @@ export default function Header({ variant = "dark" }: HeaderProps) {
                   : "text-cinza-600 hover:text-preto"
               }`}
             >
-              Precos
-            </Link>
-            <Link
-              href="/#faq"
-              className={`text-sm font-medium transition-colors ${
-                isDark
-                  ? "text-cinza-400 hover:text-white"
-                  : "text-cinza-600 hover:text-preto"
-              }`}
-            >
-              FAQ
+              Preços
             </Link>
           </nav>
 

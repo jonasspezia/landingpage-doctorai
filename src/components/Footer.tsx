@@ -42,16 +42,24 @@ const footerLinks = {
   product: [
     { label: "Funcionalidades", href: "#features" },
     { label: "Preços", href: "#pricing" },
-    { label: "Demonstração", href: "#demo" },
+    { label: "Especialidades", href: "/especialidades" },
+    { label: "Calculadora ROI", href: "/calculadora" },
     { label: "Acessar Plataforma", href: COMPANY_DATA.urls.platform, external: true }
+  ],
+  resources: [
+    { label: "Blog", href: "/blog" },
+    { label: "Casos de Sucesso", href: "/casos" },
+    { label: "Recursos Gratuitos", href: "/recursos" },
+    { label: "FAQ", href: "#faq" }
   ],
   legal: [
     { label: "Termos de Uso", href: "/termos" },
-    { label: "Política de Privacidade", href: "/privacidade" }
+    { label: "Política de Privacidade", href: "/privacidade" },
+    { label: "Segurança e LGPD", href: "/seguranca" }
   ],
   support: [
     { label: "Suporte", href: `mailto:${COMPANY_DATA.email}` },
-    { label: "FAQ", href: "#faq" }
+    { label: "Integrações", href: "/integracoes" }
   ]
 };
 
@@ -149,6 +157,21 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+
+            {/* Resources - dentro da mesma coluna para layout compacto */}
+            <h4 className="text-white font-semibold mb-4 mt-6">Recursos</h4>
+            <ul className="space-y-3">
+              {footerLinks.resources.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className="text-cinza-400 hover:text-dourado transition-colors text-sm"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Legal & Support */}
@@ -204,7 +227,7 @@ export default function Footer() {
             </div>
 
             {/* Legal Links */}
-            <div className="flex items-center gap-6 text-xs">
+            <div className="flex items-center gap-4 text-xs flex-wrap justify-center md:justify-end">
               <Link
                 href="/termos"
                 className="text-cinza-500 hover:text-cinza-300 transition-colors"
@@ -219,9 +242,12 @@ export default function Footer() {
                 Privacidade
               </Link>
               <span className="text-cinza-700">|</span>
-              <span className="text-cinza-500">
-                LGPD Compliant
-              </span>
+              <Link
+                href="/seguranca"
+                className="text-cinza-500 hover:text-cinza-300 transition-colors"
+              >
+                Segurança
+              </Link>
             </div>
           </div>
         </div>
