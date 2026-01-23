@@ -37,7 +37,7 @@ export default function FinalCTA() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 glass-dark px-5 py-2.5 rounded-full mb-8 animate-fade-in-up">
           <Sparkles className="w-4 h-4 text-dourado" />
-          <span className="text-sm font-medium text-white">Junte-se a +500 médicos</span>
+          <span className="text-sm font-medium text-white">Seu Copiloto Médico de IA</span>
         </div>
 
         {/* Headline */}

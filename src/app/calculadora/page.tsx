@@ -163,11 +163,11 @@ export default function CalculadoraPage() {
                   <Award className="w-8 h-8 text-azul" />
                 </div>
                 <h3 className="text-lg font-semibold text-cinza-900 mb-2">
-                  +500 médicos
+                  Copiloto de IA
                 </h3>
                 <p className="text-cinza-600">
-                  Médicos de todo o Brasil já confiam no DoctorAI para otimizar
-                  sua rotina clínica.
+                  Inteligência artificial especializada em medicina para apoiar
+                  sua prática clínica diária.
                 </p>
               </div>
             </div>

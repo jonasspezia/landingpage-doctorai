@@ -17,11 +17,11 @@ export default function Hero() {
         {/* Badge */}
         <div className="inline-flex items-center gap-3 glass px-5 py-2.5 rounded-full mb-8 shadow-soft animate-fade-in-up">
           <span className="flex items-center gap-2 text-verde font-semibold text-sm">
-            <span className="w-2 h-2 bg-verde rounded-full" />
-            Ativo agora
+            <span className="w-2 h-2 bg-verde rounded-full animate-pulse" />
+            Novo
           </span>
           <span className="w-px h-4 bg-cinza-300" />
-          <span className="text-cinza-600 text-sm font-medium">+500 médicos usando</span>
+          <span className="text-cinza-600 text-sm font-medium">Copiloto Médico de IA</span>
         </div>
 
         {/* Headline */}
@@ -34,10 +34,10 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="text-lg md:text-xl text-cinza-500 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-200">
-          Converse com uma IA especializada em saúde, tire dúvidas clínicas e{" "}
-          <span className="font-semibold text-cinza-700">gere prontuários SOAP em segundos</span>.
+          Seu copiloto de IA para a prática médica. Tire dúvidas clínicas, pesquise literatura,{" "}
+          <span className="font-semibold text-cinza-700">gere prontuários SOAP automaticamente</span> e muito mais.
           <br className="hidden sm:block" />
-          Economize 2 horas por dia com documentação.
+          Inteligência artificial especializada em medicina.
         </p>
 
         {/* CTA */}

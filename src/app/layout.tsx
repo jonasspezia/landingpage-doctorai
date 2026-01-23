@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://teledocmedical.ai"),
   title: "DoctorAI - Seu Copiloto Médico com IA | Teledoc Journey Medical",
-  description: "Economize 2h por dia com documentação automática. Transcreva consultas e gere SOAP em segundos. Usado por +500 médicos brasileiros.",
+  description: "Copiloto médico de IA. Tire dúvidas clínicas, pesquise literatura, gere prontuários SOAP automaticamente. Inteligência artificial especializada em medicina.",
   keywords: ["doctorai", "ia médica", "prontuário automático", "transcrição médica", "soap", "teledoc", "teledoc journey medical"],
   authors: [{ name: "Teledoc Journey Medical" }],
   openGraph: {
@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     description: "Transcreva consultas e gere prontuário SOAP automaticamente. Grátis para começar.",
     images: [
       {
-        url: "/hero-screenshot.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "DoctorAI - Seu Copiloto Médico Inteligente",
+        alt: "Teledoc Journey Medical - DoctorAI",
       },
     ],
   },
@@ -35,7 +35,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DoctorAI - Economize 2h por dia com IA",
     description: "Transcreva consultas e gere prontuário SOAP automaticamente.",
-    images: ["/hero-screenshot.png"],
+    images: ["/og-image.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,

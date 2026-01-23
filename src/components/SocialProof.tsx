@@ -1,11 +1,11 @@
-import { Users, FileText, Clock, Star } from "lucide-react";
+import { Brain, MessageSquare, Clock, Shield } from "lucide-react";
 
 export default function SocialProof() {
-  const stats = [
-    { number: "+500", label: "Médicos ativos", icon: Users },
-    { number: "50.000+", label: "Consultas transcritas", icon: FileText },
-    { number: "2h", label: "Economia média/dia", icon: Clock },
-    { number: "4.9/5", label: "Avaliação média", icon: Star },
+  const features = [
+    { icon: Brain, label: "Copiloto Médico de IA", description: "Inteligência clínica" },
+    { icon: MessageSquare, label: "Chat Especializado", description: "Dúvidas médicas" },
+    { icon: Clock, label: "Prontuário SOAP", description: "Geração automática" },
+    { icon: Shield, label: "100% Seguro", description: "Dados protegidos" },
   ];
 
   return (
@@ -19,19 +19,19 @@ export default function SocialProof() {
 
       <div className="relative max-w-6xl mx-auto px-5">
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-          {stats.map((stat, index) => (
+          {features.map((feature, index) => (
             <div
               key={index}
               className="group flex items-center gap-4 text-center md:text-left"
             >
-              <div className="hidden md:flex w-12 h-12 rounded-xl bg-gradient-to-br from-dourado/20 to-dourado/5 items-center justify-center group-hover:scale-110 transition-transform">
-                <stat.icon className="w-5 h-5 text-dourado" />
+              <div className="flex w-12 h-12 rounded-xl bg-gradient-to-br from-dourado/20 to-dourado/5 items-center justify-center group-hover:scale-110 transition-transform">
+                <feature.icon className="w-5 h-5 text-dourado" />
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-dourado to-dourado-claro">
-                  {stat.number}
+                <div className="text-lg md:text-xl font-bold text-white">
+                  {feature.label}
                 </div>
-                <div className="text-sm text-cinza-400 font-medium">{stat.label}</div>
+                <div className="text-sm text-cinza-400 font-medium">{feature.description}</div>
               </div>
             </div>
           ))}
