@@ -1,0 +1,74 @@
+# Stack para deploy no Portainer - DoctorAI Landing Page
+# Domínio: teledocmedical.ai
+#
+# INSTRUÇÕES DE DEPLOY:
+# 1. Acesse painel.teledocmedical.ai
+# 2. Login: teledocmedical / Columpios123_
+# 3. Vá em Stacks → Add Stack
+# 4. Nome: doctorai-landing
+# 5. Cole este conteúdo
+# 6. Deploy the stack
+
+version: "3.8"
+
+services:
+  doctorai-landing:
+    image: ghcr.io/teledocjourney/doctorai-landing:latest
+    container_name: doctorai-landing
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
+    networks:
+      - traefik-public
+    labels:
+      # Traefik config
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+
+      # Main router - teledocmedical.ai
+      - "traefik.http.routers.doctorai-landing.rule=Host(`teledocmedical.ai`) || Host(`www.teledocmedical.ai`)"
+      - "traefik.http.routers.doctorai-landing.entrypoints=websecure"
+      - "traefik.http.routers.doctorai-landing.tls=true"
+      - "traefik.http.routers.doctorai-landing.tls.certresolver=letsencrypt"
+      - "traefik.http.services.doctorai-landing.loadbalancer.server.port=3000"
+
+      # WWW to non-WWW redirect
+      - "traefik.http.middlewares.doctorai-www-redirect.redirectregex.regex=^https://www\\.teledocmedical\\.ai/(.*)"
+      - "traefik.http.middlewares.doctorai-www-redirect.redirectregex.replacement=https://teledocmedical.ai/$${1}"
+      - "traefik.http.middlewares.doctorai-www-redirect.redirectregex.permanent=true"
+      - "traefik.http.routers.doctorai-landing.middlewares=doctorai-www-redirect"
+
+      # HTTP to HTTPS redirect
+      - "traefik.http.routers.doctorai-landing-http.rule=Host(`teledocmedical.ai`) || Host(`www.teledocmedical.ai`)"
+      - "traefik.http.routers.doctorai-landing-http.entrypoints=web"
+      - "traefik.http.routers.doctorai-landing-http.middlewares=https-redirect@file"
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+
+networks:
+  traefik-public:
+    external: true
