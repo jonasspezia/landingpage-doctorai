@@ -13,7 +13,7 @@ version: "3.8"
 
 services:
   doctorai-landing:
-    image: ghcr.io/teledocjourney/doctorai-landing:latest
+    image: ghcr.io/jonasspezia/landingpage-doctorai:latest
     container_name: doctorai-landing
     restart: unless-stopped
     environment:

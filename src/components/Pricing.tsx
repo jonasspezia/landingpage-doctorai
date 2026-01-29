@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { trackCTAClick } from "@/lib/analytics";
 import {
   Check,
-  Sparkles,
   MessageSquare,
   FileText,
   Mic,
@@ -19,366 +19,294 @@ import {
   Users,
   Crown,
   Building2,
-  Mail
+  Mail,
+  ArrowRight
 } from "lucide-react";
 
 // Links de pagamento do Stripe
 const STRIPE_LINKS = {
-  essencial: "https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w",
-  completo: "https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
+  completo: "https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x",
+  completoAnual: "https://buy.stripe.com/fZu8wQdZi9c5epjdLg2Ji0D"
 };
 
 // Planos
 const PLANS = {
-  essencial: {
-    name: "Essencial",
-    price: 97,
-    description: "Para médicos que querem otimizar sua rotina",
+  gratuito: {
+    name: "Gratuito",
+    price: 0,
+    description: "Para conhecer a plataforma",
     icon: Zap,
-    popular: true,
+    cta: "Começar Grátis",
+    ctaStyle: "secondary",
     features: [
-      { icon: MessageSquare, text: "Chat com IA médica ilimitado" },
-      { icon: FileText, text: "Prontuários SOAP automáticos" },
-      { icon: Mic, text: "Transcrição em tempo real" },
-      { icon: Image, text: "Upload de imagens e exames" },
-      { icon: Search, text: "Pesquisa web integrada" },
-      { icon: Headphones, text: "Suporte por email" }
+      { icon: MessageSquare, text: "50 consultas por mês", included: true },
+      { icon: BookOpen, text: "Citações de PubMed e SciELO", included: true },
+      { icon: FileText, text: "Prontuários SOAP básicos", included: true },
+      { icon: Search, text: "Pesquisa em literatura médica", included: true },
+      { icon: Headphones, text: "Suporte por email", included: true },
+      { icon: Mic, text: "Transcrição em tempo real", included: false },
+      { icon: Image, text: "Upload de imagens", included: false }
     ]
   },
   completo: {
     name: "Completo",
-    price: 149,
-    description: "Todos os recursos para máxima produtividade",
+    priceMonthly: 149,
+    priceAnnual: 1430,
+    description: "Acesso total e ilimitado ao DoctorAI",
     icon: Crown,
-    popular: false,
+    cta: "Assinar Completo",
+    ctaStyle: "primary",
+    popular: true,
     features: [
-      { icon: Check, text: "Tudo do plano Essencial" },
-      { icon: Key, text: "API Keys personalizadas" },
-      { icon: Code, text: "Code Interpreter avançado" },
-      { icon: Wrench, text: "Ferramentas personalizadas" },
-      { icon: Users, text: "Canais de colaboração" },
-      { icon: Headphones, text: "Suporte prioritário" }
+      { icon: MessageSquare, text: "Consultas ilimitadas", included: true },
+      { icon: BookOpen, text: "Citações completas com abstract", included: true },
+      { icon: FileText, text: "Prontuários SOAP avançados", included: true },
+      { icon: Mic, text: "Transcrição em tempo real", included: true },
+      { icon: Image, text: "Upload de imagens e exames", included: true },
+      { icon: Search, text: "DeepConsult (pesquisa profunda)", included: true },
+      { icon: Code, text: "API de integração", included: true },
+      { icon: Headphones, text: "Suporte prioritário", included: true }
     ]
   },
   enterprise: {
-    name: "Enterprise",
+    name: "Institucional",
     price: null,
-    description: "Para faculdades, clínicas e planos de saúde",
+    description: "Para hospitais, clínicas e faculdades",
     icon: Building2,
-    popular: false,
+    cta: "Falar com Comercial",
+    ctaStyle: "dark",
     features: [
-      { icon: Check, text: "Tudo do plano Completo" },
-      { icon: Users, text: "100+ usuários" },
-      { icon: Shield, text: "SLA garantido 99.9%" },
-      { icon: BookOpen, text: "Treinamento personalizado" },
-      { icon: Wrench, text: "Integrações customizadas" },
-      { icon: Headphones, text: "Gerente de conta dedicado" }
+      { icon: Check, text: "Tudo do plano Completo", included: true },
+      { icon: Users, text: "Usuários ilimitados", included: true },
+      { icon: Shield, text: "SLA garantido 99.9%", included: true },
+      { icon: BookOpen, text: "Treinamento da equipe", included: true },
+      { icon: Wrench, text: "Integrações com PEP/EMR", included: true },
+      { icon: Key, text: "API dedicada", included: true },
+      { icon: Headphones, text: "Gerente de conta dedicado", included: true }
     ]
   }
 };
 
-const benefits = [
-  "Economize 2 horas por dia",
-  "Documentação mais completa",
-  "Menos erros em prontuários",
-  "Foco total no paciente",
-  "Atualizações automáticas",
-  "Cancele quando quiser"
-];
-
 export default function Pricing() {
-  const handleSubscribe = (plan: "essencial" | "completo" | "enterprise") => {
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  const isAnnual = billingCycle === "annual";
+
+  const handleSubscribe = (plan: string) => {
     trackCTAClick("pricing", `Assinar ${plan}`);
   };
 
   return (
-    <section id="pricing" className="relative py-24 overflow-hidden">
-      {/* Background - Single Layer */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cinza-50 via-white to-white" />
+    <section id="pricing" className="relative py-20 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-cinza-50/50 to-white" />
 
-      <div className="relative max-w-7xl mx-auto px-5">
+      <div className="relative max-w-6xl mx-auto px-5">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 glass px-5 py-2.5 rounded-full mb-6 shadow-soft animate-fade-in-up">
-            <Sparkles className="w-4 h-4 text-dourado" />
-            <span className="text-sm font-semibold text-cinza-700">Escolha seu plano</span>
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6 shadow-soft">
+            <Crown className="w-4 h-4 text-dourado" />
+            <span className="text-sm font-medium text-cinza-700">Planos</span>
           </div>
 
-          <h2 className="text-h2 text-preto mb-4 animate-fade-in-up delay-100">
-            Invista na sua{" "}
-            <span className="gradient-text">produtividade</span>
+          <h2 className="text-h2 text-preto mb-4">
+            Escolha o Plano{" "}
+            <span className="gradient-text">Ideal para Você</span>
           </h2>
 
-          <p className="text-lg text-cinza-500 max-w-2xl mx-auto animate-fade-in-up delay-200">
-            Planos pensados para diferentes necessidades. Sem surpresas, sem taxas escondidas.
+          <p className="text-lg text-cinza-500 max-w-2xl mx-auto">
+            Comece gratuitamente e evolua conforme suas necessidades.
+            Sem compromisso, cancele quando quiser.
+          </p>
+
+          {/* Billing Toggle */}
+          <div className="mt-8 inline-flex items-center gap-3 bg-cinza-100 p-1 rounded-full">
+            <button
+              onClick={() => setBillingCycle("monthly")}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                !isAnnual
+                  ? "bg-white text-preto shadow-soft"
+                  : "text-cinza-500 hover:text-cinza-700"
+              }`}
+            >
+              Mensal
+            </button>
+            <button
+              onClick={() => setBillingCycle("annual")}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                isAnnual
+                  ? "bg-white text-preto shadow-soft"
+                  : "text-cinza-500 hover:text-cinza-700"
+              }`}
+            >
+              Anual
+              <span className="ml-1.5 text-xs font-semibold text-verde">-20%</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Gratuito */}
+          <div className="bg-white rounded-2xl p-6 shadow-soft border border-cinza-100 hover:border-cinza-200 transition-colors">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-cinza-100 flex items-center justify-center">
+                <PLANS.gratuito.icon className="w-5 h-5 text-cinza-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-preto">{PLANS.gratuito.name}</h3>
+                <p className="text-xs text-cinza-500">{PLANS.gratuito.description}</p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-preto">R$0</span>
+                <span className="text-cinza-500">/mês</span>
+              </div>
+              <p className="text-xs text-cinza-400 mt-1">Para sempre</p>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              {PLANS.gratuito.features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  {feature.included ? (
+                    <Check className="w-4 h-4 text-verde flex-shrink-0" />
+                  ) : (
+                    <span className="w-4 h-4 text-cinza-300 flex-shrink-0">—</span>
+                  )}
+                  <span className={`text-sm ${feature.included ? 'text-cinza-700' : 'text-cinza-400'}`}>
+                    {feature.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="https://doctorai.teledocmedical.ai"
+              onClick={() => handleSubscribe("gratuito")}
+              className="block w-full py-3 px-4 rounded-xl font-medium text-center border-2 border-cinza-200 text-cinza-700 hover:border-cinza-300 hover:bg-cinza-50 transition-colors"
+            >
+              {PLANS.gratuito.cta}
+            </a>
+          </div>
+
+          {/* Completo - Destacado */}
+          <div className="relative bg-white rounded-2xl p-6 shadow-elevated border-2 border-dourado/30">
+            {/* Badge */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+              <span className="bg-dourado text-white text-xs font-medium px-3 py-1 rounded-full">
+                {isAnnual ? "20% de desconto" : "Recomendado"}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-dourado/10 flex items-center justify-center">
+                <PLANS.completo.icon className="w-5 h-5 text-dourado" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-preto">{PLANS.completo.name}</h3>
+                <p className="text-xs text-cinza-500">{PLANS.completo.description}</p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              {isAnnual ? (
+                <>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm text-cinza-500">R$</span>
+                    <span className="text-3xl font-bold gradient-text">1.430</span>
+                    <span className="text-cinza-500">/ano</span>
+                  </div>
+                  <p className="text-xs text-cinza-400 mt-1">
+                    <span className="line-through">R$1.788/ano</span>
+                    {" · "}Equivale a R$119/mês
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm text-cinza-500">R$</span>
+                    <span className="text-3xl font-bold gradient-text">{PLANS.completo.priceMonthly}</span>
+                    <span className="text-cinza-500">/mês</span>
+                  </div>
+                  <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
+                </>
+              )}
+            </div>
+
+            <div className="space-y-3 mb-6">
+              {PLANS.completo.features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-dourado flex-shrink-0" />
+                  <span className="text-sm text-cinza-700">{feature.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href={isAnnual ? STRIPE_LINKS.completoAnual : STRIPE_LINKS.completo}
+              onClick={() => handleSubscribe(isAnnual ? "completo-anual" : "completo")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-semibold text-center btn-gradient text-white shadow-soft hover:shadow-elevated transition-all"
+            >
+              {PLANS.completo.cta}
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Enterprise */}
+          <div className="bg-cinza-900 rounded-2xl p-6 shadow-elevated">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                <PLANS.enterprise.icon className="w-5 h-5 text-dourado" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">{PLANS.enterprise.name}</h3>
+                <p className="text-xs text-cinza-400">{PLANS.enterprise.description}</p>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-bold text-white">Sob consulta</span>
+              </div>
+              <p className="text-xs text-cinza-400 mt-1">Preço por volume de usuários</p>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              {PLANS.enterprise.features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-dourado flex-shrink-0" />
+                  <span className="text-sm text-cinza-300">{feature.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="mailto:comercial@teledocmedical.ai?subject=DoctorAI Institucional - Solicitar Proposta"
+              onClick={() => handleSubscribe("enterprise")}
+              className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl font-semibold text-center bg-white text-cinza-900 hover:bg-cinza-100 transition-colors"
+            >
+              <Mail className="w-4 h-4" />
+              {PLANS.enterprise.cta}
+            </a>
+          </div>
+        </div>
+
+        {/* Garantia */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-cinza-500">
+            Não ficou satisfeito?{" "}
+            <span className="font-medium text-cinza-700">Cancele a qualquer momento</span>, sem burocracia.
           </p>
         </div>
 
-        {/* Pricing Cards - 3 columns */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {/* Essencial Plan */}
-          <div className="relative animate-fade-in-up delay-200">
-            {/* Popular Badge */}
-            <div className="flex justify-center mb-[-22px] relative z-10">
-              <div className="btn-gradient px-6 py-2 rounded-full text-white text-sm font-bold shadow-glow flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                Mais Popular
-              </div>
-            </div>
-
-            <div className="relative bg-white rounded-3xl shadow-elevated overflow-hidden card-hover h-full">
-              {/* Gradient Border Top */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dourado via-dourado-claro to-dourado" />
-
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-dourado/20 to-dourado/10 flex items-center justify-center">
-                    <PLANS.essencial.icon className="w-5 h-5 text-dourado" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-preto">{PLANS.essencial.name}</h3>
-                    <p className="text-xs text-cinza-500">{PLANS.essencial.description}</p>
-                  </div>
-                </div>
-
-                {/* Price */}
-                <div className="mb-5">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-sm text-cinza-500">R$</span>
-                    <span className="text-4xl font-extrabold gradient-text">{PLANS.essencial.price}</span>
-                    <span className="text-cinza-500">/mês</span>
-                  </div>
-                  <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-2 mb-6">
-                  {PLANS.essencial.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <feature.icon className="w-4 h-4 text-dourado flex-shrink-0" />
-                      <span className="text-sm text-cinza-700">{feature.text}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA Button */}
-                <a
-                  href={STRIPE_LINKS.essencial}
-                  onClick={() => handleSubscribe("essencial")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group btn-gradient text-white w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-glow-lg hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
-                >
-                  <Shield className="w-4 h-4" />
-                  Assinar Essencial
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Completo Plan */}
-          <div className="relative animate-fade-in-up delay-300">
-            <div className="h-[22px]" /> {/* Spacer to align with Essencial card */}
-
-            <div className="relative bg-white rounded-3xl shadow-soft overflow-hidden card-hover h-full border-2 border-cinza-200">
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cinza-200 to-cinza-100 flex items-center justify-center">
-                    <PLANS.completo.icon className="w-5 h-5 text-cinza-700" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-preto">{PLANS.completo.name}</h3>
-                    <p className="text-xs text-cinza-500">{PLANS.completo.description}</p>
-                  </div>
-                </div>
-
-                {/* Price */}
-                <div className="mb-5">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-sm text-cinza-500">R$</span>
-                    <span className="text-4xl font-extrabold text-preto">{PLANS.completo.price}</span>
-                    <span className="text-cinza-500">/mês</span>
-                  </div>
-                  <p className="text-xs text-cinza-400 mt-1">Cobrado mensalmente</p>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-2 mb-6">
-                  {PLANS.completo.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <feature.icon className="w-4 h-4 text-cinza-600 flex-shrink-0" />
-                      <span className="text-sm text-cinza-700">{feature.text}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA Button */}
-                <a
-                  href={STRIPE_LINKS.completo}
-                  onClick={() => handleSubscribe("completo")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group bg-cinza-900 hover:bg-preto text-white w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-soft hover:shadow-elevated hover:-translate-y-1 transition-all duration-300"
-                >
-                  <Crown className="w-4 h-4" />
-                  Assinar Completo
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Enterprise Plan */}
-          <div className="relative animate-fade-in-up delay-400">
-            <div className="h-[22px]" /> {/* Spacer to align */}
-
-            <div className="relative bg-gradient-to-br from-cinza-900 to-cinza-800 rounded-3xl shadow-elevated overflow-hidden card-hover h-full">
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                    <PLANS.enterprise.icon className="w-5 h-5 text-dourado" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">{PLANS.enterprise.name}</h3>
-                    <p className="text-xs text-cinza-400">{PLANS.enterprise.description}</p>
-                  </div>
-                </div>
-
-                {/* Price */}
-                <div className="mb-5">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-extrabold text-white">Sob consulta</span>
-                  </div>
-                  <p className="text-xs text-cinza-400 mt-1">Preços personalizados por volume</p>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-2 mb-6">
-                  {PLANS.enterprise.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <feature.icon className="w-4 h-4 text-dourado flex-shrink-0" />
-                      <span className="text-sm text-cinza-300">{feature.text}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA Button - Link to form */}
-                <a
-                  href="mailto:teledoc@teledocmedical.com?subject=DoctorAI Enterprise - Solicitar Orçamento&body=Olá! Gostaria de solicitar um orçamento para o plano Enterprise do DoctorAI.%0A%0ANome da instituição:%0ATipo (faculdade/clínica/plano de saúde):%0ANúmero de usuários estimado:%0AContato:"
-                  onClick={() => handleSubscribe("enterprise")}
-                  className="group bg-dourado hover:bg-dourado-claro text-preto w-full py-3 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-glow hover:shadow-glow-lg hover:-translate-y-1 transition-all duration-300"
-                >
-                  <Mail className="w-4 h-4" />
-                  Solicitar Orçamento
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Benefits Grid */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto animate-fade-in-up">
-          {benefits.map((benefit, index) => (
-            <div key={index} className="flex items-center gap-3 glass px-4 py-3 rounded-xl">
-              <Check className="w-5 h-5 text-verde flex-shrink-0" />
-              <span className="text-sm font-medium text-cinza-700">{benefit}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Comparison Table */}
-        <div className="mt-16 max-w-4xl mx-auto animate-fade-in-up">
-          <h4 className="text-center text-lg font-bold text-preto mb-6">Comparativo de Planos</h4>
-          <div className="bg-white rounded-2xl shadow-soft overflow-hidden overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-cinza-50">
-                  <th className="px-4 py-4 text-left text-sm font-semibold text-cinza-700">Recurso</th>
-                  <th className="px-4 py-4 text-center text-sm font-semibold text-dourado">
-                    Essencial
-                    <span className="ml-1 bg-verde/20 text-verde text-xs px-2 py-0.5 rounded-full">
-                      POPULAR
-                    </span>
-                  </th>
-                  <th className="px-4 py-4 text-center text-sm font-semibold text-cinza-700">Completo</th>
-                  <th className="px-4 py-4 text-center text-sm font-semibold text-cinza-700">Enterprise</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-cinza-100">
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Valor mensal</td>
-                  <td className="px-4 py-3 text-center text-sm font-bold text-dourado">R$97</td>
-                  <td className="px-4 py-3 text-center text-sm font-semibold text-cinza-700">R$149</td>
-                  <td className="px-4 py-3 text-center text-sm font-semibold text-cinza-700">Sob consulta</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Usuários</td>
-                  <td className="px-4 py-3 text-center text-sm text-cinza-600">1</td>
-                  <td className="px-4 py-3 text-center text-sm text-cinza-600">1</td>
-                  <td className="px-4 py-3 text-center text-sm text-cinza-600">100+</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Chat IA ilimitado</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Prontuários SOAP</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Upload de imagens</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Web Search</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">API Keys</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Code Interpreter</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Ferramentas avançadas</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">SLA garantido</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 text-sm text-cinza-600">Gerente de conta</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center text-cinza-400">-</td>
-                  <td className="px-4 py-3 text-center"><Check className="w-4 h-4 text-verde mx-auto" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Guarantee */}
-        <div className="mt-12 text-center animate-fade-in-up">
-          <p className="text-cinza-500 text-sm">
-            Não ficou satisfeito? <span className="font-semibold text-cinza-700">Cancele a qualquer momento</span> sem burocracia.
+        {/* Disclaimer */}
+        <div className="mt-8 p-4 bg-cinza-100 rounded-xl max-w-2xl mx-auto">
+          <p className="text-xs text-cinza-500 text-center">
+            <strong>Nota:</strong> O DoctorAI é uma ferramenta de apoio à decisão clínica.
+            Não substitui o julgamento profissional do médico ou a avaliação presencial do paciente.
           </p>
         </div>
       </div>
