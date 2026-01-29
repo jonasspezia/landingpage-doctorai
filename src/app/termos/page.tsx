@@ -124,8 +124,9 @@ export default function TermosPage() {
                 Os serviços do DoctorAI são oferecidos mediante assinatura paga:
               </p>
               <ul className="list-disc pl-6 text-cinza-600 space-y-2">
-                <li><strong>Plano Profissional:</strong> R$ 97,00/mês, cobrado mensalmente</li>
-                <li><strong>Plano Empresarial:</strong> R$ 149,00/mês, cobrado mensalmente</li>
+                <li><strong>Plano Gratuito:</strong> R$ 0/mês, com 50 consultas mensais</li>
+                <li><strong>Plano Completo:</strong> R$ 149,00/mês ou R$ 1.430,00/ano (20% de desconto)</li>
+                <li><strong>Plano Institucional:</strong> Sob consulta, para hospitais e clínicas</li>
               </ul>
               <p className="text-cinza-600 leading-relaxed mt-4">
                 Condições de pagamento:

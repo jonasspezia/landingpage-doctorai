@@ -206,7 +206,7 @@ export default function CalculadoraPage() {
                 </summary>
                 <p className="text-cinza-600 mt-4">
                   Sim! O ROI (Retorno sobre Investimento) já desconta o valor da
-                  assinatura mensal de R$ 97. Se o ROI mostra 500%, significa
+                  assinatura mensal de R$ 149. Se o ROI mostra 500%, significa
                   que para cada R$ 1 investido, você recupera R$ 5 em valor de
                   tempo.
                 </p>
@@ -256,12 +256,12 @@ export default function CalculadoraPage() {
               Comece hoje e veja os resultados na primeira consulta.
             </p>
             <a
-              href="https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w"
+              href="https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3 shadow-glow hover:shadow-glow-lg transition-all"
             >
-              Começar Agora - R$ 97/mês
+              Começar Agora - R$ 149/mês
             </a>
             <p className="text-cinza-500 text-sm mt-4">
               Cancele quando quiser. Sem fidelidade.

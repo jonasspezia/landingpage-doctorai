@@ -198,7 +198,7 @@ export default async function SpecialtyPage({ params }: PageProps) {
                 </p>
 
                 <a
-                  href="https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w"
+                  href="https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-gradient text-white px-8 py-4 rounded-xl font-bold inline-flex items-center gap-2"
@@ -346,12 +346,12 @@ export default async function SpecialtyPage({ params }: PageProps) {
               {specialty.name === "Clínica Geral" ? "clínicos" : specialty.name.toLowerCase().replace("ia", "istas").replace("ência", "istas")} que já economizam horas por dia.
             </p>
             <a
-              href="https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w"
+              href="https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3"
             >
-              Começar Agora - R$ 97/mês
+              Começar Agora - R$ 149/mês
               <ChevronRight className="w-5 h-5" />
             </a>
             <p className="text-cinza-500 text-sm mt-4">

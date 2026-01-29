@@ -281,7 +281,7 @@ export default function ROICalculator({ variant = "full", showCTA = true }: ROIC
         {showCTA && (
           <div className="text-center">
             <a
-              href="https://buy.stripe.com/5kQaEY3kEgEx0ytcHc2Ji0w"
+              href="https://buy.stripe.com/9B68wQbRa2NH4OJdLg2Ji0x"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3 shadow-glow hover:shadow-glow-lg transition-all"
@@ -290,7 +290,7 @@ export default function ROICalculator({ variant = "full", showCTA = true }: ROIC
               <ChevronRight className="w-5 h-5" />
             </a>
             <p className="text-cinza-500 text-sm mt-3">
-              Investimento: R$ 97/mês | Retorno: {formatCurrency(results.moneySavedPerMonth)}/mês
+              Investimento: R$ 149/mês | Retorno: {formatCurrency(results.moneySavedPerMonth)}/mês
             </p>
           </div>
         )}
